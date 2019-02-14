@@ -1,0 +1,199 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Tahoma, sans-serif;
+  padding: 0 8%;
+  background: linear-gradient(180deg, #d3d4d6, #ebebeb) no-repeat;
+}
+
+.logo {
+  width: 12%;
+  margin-top: 2%;
+  height: auto;
+  float: left;
+  margin-bottom: 2%;
+  margin-right: 2%;
+}
+
+h1 {
+  margin-top: 4%;
+  font-size: 2.35vw;
+  float: left;
+}
+
+.info-text {
+  font-size: 1.2vw;
+  margin-top: 3%;
+  width: 40%;
+  float: right;
+}
+
+.info-img {
+  margin-top: 4.1%;
+  margin-right: 0.8%;
+  float: right;
+  width: 3%;
+  height: auto;
+}
+
+.form-text {
+  width: max-content;
+  font-size: 1.05vw;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5%;
+}
+
+.clearfix:after {
+  content: " ";
+  clear: both;
+  display: table;
+}
+
+.form {
+  clear: both;
+  margin-bottom: 3.5%;
+}
+
+.new-task-field {
+  width: 20%;
+  height: 2.3vw;
+  border-radius: 0.4vw;
+  padding-left: 1%;
+  font-size: 1vw;
+}
+
+.new-task-button {
+  width: 11%;
+  font-size: 0.9vw;
+  height: 2.3vw;
+  background: linear-gradient(180deg, #7e7e7e, #3e3e3e);
+  color: #ffffff;
+  border: none;
+  font-weight: bold;
+  border-radius: 0.35vw;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2%;
+}
+
+.main-item {
+  min-height: 30vw;
+  max-height: 74vw;
+  overflow-y: auto;
+  border: 0.14vw dashed #bebebe;
+  width: 30.5%;
+  padding-top: 1.5%;
+}
+
+.main-item::-webkit-scrollbar {
+    display: none;
+}
+
+h2 {
+  color: #424242;
+  font-size: 1.8vw;
+  text-align: center; 
+}
+
+ul {
+  list-style-type: none;
+  padding: 10% 0;
+}
+
+li {
+  width: 71%;
+  height: 18vw;
+  margin: 0 auto;
+  margin-bottom: 11%;
+  padding: 5%;
+  background-color: #ffff91;
+  box-shadow: 0.3vw 0.3vw 0.6vw #cccccc;
+}
+
+h3 {
+  font-size: 1.2vw;
+  margin-bottom: 5%;
+}
+
+.main-item p {
+  /*word-break: break-all;*/
+  font-size: 1vw;
+  height: 10.4vw;
+  margin-bottom: 0.6vw;
+}
+
+.action-img, 
+.edit-img {
+  width: 15%;
+  height: auto;
+  background: linear-gradient(180deg, #8b8e95, #000601);
+  border-radius: 50%;
+  float: right;
+  margin-left: 0.4vw;
+  cursor: pointer;
+}
+
+.footer-page div:nth-child(1) {
+  font-size: 1.05vw;
+}
+
+.footer-page div:nth-child(2) {
+  margin-bottom: 0.5%;
+  font-size: 1.05vw;
+}
+
+.author {
+  text-align: right;
+  font-size: 0.9vw;
+  margin-bottom: 1%;
+}
+
+.link {
+  text-decoration: none;
+  color: #000000;
+}
+
+/*Далее стили для элементов, вызванных через JavaScript*/
+
+.delete-task {
+  text-align: center;
+  margin-top: 40%;
+  font-size: 1.25vw;
+}
+
+.cansel-delete-task {
+  color: blue;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 35%;
+  font-size: 1.1vw;
+  cursor: pointer;
+  width: max-content;
+}
+
+.edit-input-field {
+  width: 100%;
+  font-size: 1.2vw;
+}
+
+.edit-textarea {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 10.4vw;
+  max-height: 10.4vw;
+  font-size: 1vw;
+}
+
+.select-name-main-item {
+  width: 60%;
+  height: 1.5vw;
+  font-size: 1vw;
+}
