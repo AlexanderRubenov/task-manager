@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>Менеджер задач</title>
@@ -15,7 +15,7 @@
     
     <p class="info-text">Добавляйте задачи с помощью формы ввода и распределяйте их по столбцам состояния. Новые задачи автоматически попадают в столбец "Невыполнено".</p>
     <img class="info-img" src="img/info.png" alt="Информация" >
-    <div class="form" action=""  method="post">
+    <div class="form">
       <label class="form-text" for="new-task-field">Добавить новую задачу</label>
       <label><input class="new-task-field" type="text" name="new-task" id="new-task-field" placeholder="Новая задача">
       <input class="new-task-button" type="submit" value="+ Добавить задачу"></label>
@@ -24,10 +24,10 @@
 
   <main class="main">
     <div class="main-item backlog">
-      <h2>Невыполнено (<span class="number-of-backlog-tasks">1</span>)</h2>
-      <ul>
+      <h2>Невыполнено (<span class="number-of-tasks number-of-backlog-tasks">1</span>)</h2>
+      <ul class="js-lists-of-tasks" data-select="0">
         <li>
-          <h3>Задача #<span>6</span></h3>
+          <h3>Задача #<span class="task-number">6</span></h3>
           <p>Подготовить соответствующие категории навыков</p>
           <img class="action-img delete" src="img/delete.png" alt="Удалить" title="Удалить">
           <img class="action-img edit" src="img/edit.png" alt="Изменить" title="Изменить">
@@ -35,8 +35,8 @@
       </ul>
     </div>
     <div class="main-item in-progress">
-      <h2>В процессе (<span class="number-of-in-progress-tasks">3</span>)</h2>
-      <ul>
+      <h2>В процессе (<span class="number-of-tasks number-of-in-progress-tasks">3</span>)</h2>
+      <ul class="js-lists-of-tasks"  data-select="1">
         <li draggable="true">
           <h3>Задача #<span>5</span></h3>
           <p>Забронировать место на церемонию открытия<br><b>Время начала</b><br>14/02/2019 20:00:00<br><b>Ответственный</b><br>alexander.rubenov@list.ru</p>
@@ -58,8 +58,8 @@
       </ul>
     </div>
     <div class="main-item div-done">
-      <h2>Выполнено (<span class="number-done-tasks">2</span>)</h2>
-      <ul>
+      <h2>Выполнено (<span class="number-of-tasks number-done-tasks">2</span>)</h2>
+      <ul class="js-lists-of-tasks"  data-select="2">
         <li>
           <h3>Задача #<span>2</span></h3>
           <p>Создать сайт мероприятия<br><b>Время начала</b><br>14/02/2019 20:00:00<br><b>Время конца</b><br>14/02/2019 22:00:00<br></p>

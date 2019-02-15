@@ -1,211 +1,149 @@
-'use strict';
+"use strict";
+let
+  containerOfAllSections = document.querySelector('main'),
+  [sectionBacklog, sectionInProgress, sectionDone] = document.querySelectorAll('.main-item'),
+  [textInputFieldForNewTask, buttonToAddNewTask] = document.querySelectorAll('input'),
+  taskNumber = document.querySelector('.task-number').textContent,
+  [listOfBacklogTasks, listOfInProgressTasks, listOfDoneTasks] = document.querySelectorAll('ul'),
+  [numberOfBacklogTasks, numberOfInProgressTasks, numberOfDoneTasks] = document.querySelectorAll('.number-of-tasks');
 
-
-let backlog = document.querySelector('.backlog');
-let inProgress = document.querySelector('.in-progress');
-let done = document.querySelector('.div-done');
-let numberOfBacklogTasks = document.querySelector('.number-of-backlog-tasks');
-let numberOfInProgressTasks = document.querySelector('.number-of-in-progress-tasks');
-let numberOfDoneTasks = document.querySelector('.number-done-tasks');
-let taskNumber = +backlog.children[1].firstElementChild.firstElementChild.firstElementChild.innerHTML;
-let main = document.querySelector('.main');
-
-let buttonAddNewTask = document.querySelector('.new-task-button');
-
-function addNewNote() {
-  let input = document.querySelector('.new-task-field');
-  let textOfTask = input.value;
-
-  if (!textOfTask) return;
-
+function addNewTaskInSectionBacklog() {
+  if (!textInputFieldForNewTask.value) return;
   let li = document.createElement('li');
-  li.innerHTML = `<h3>Задача #<span>${ ++taskNumber }</span></h3><p>${ textOfTask }</p><img class="action-img delete" src="img/delete.png" alt="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-  let ul = document.querySelector('.backlog ul');
-  ul.insertBefore(li, ul.firstChild);
-  input.value = '';
+  li.innerHTML = `<h3>Задача #<span>${ ++taskNumber }</span></h3><p>${ textInputFieldForNewTask.value }</p><img class="action-img delete" src="img/delete.png" alt="Удалить" title="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить" title="Изменить">`;
+  listOfBacklogTasks.insertBefore(li, listOfBacklogTasks.firstChild);
+  textInputFieldForNewTask.value = '';
+  changeNumberOfTasks();
+};
 
-  numberOfBacklogTasks.innerHTML++;
-}
-
-buttonAddNewTask.addEventListener('click', addNewNote);
+buttonToAddNewTask.addEventListener('click', addNewTaskInSectionBacklog);
 
 function deleteTask(event) {
   let target = event.target;
 
-  if (!target.hasAttribute('class')) return;
-  let className = target.getAttribute('class');
-  if (className.indexOf('action-img') == -1) return;
-  if (className.indexOf('edit') != -1) return;
+  if (!target.hasAttribute('class') || !(target.getAttribute('class').includes('delete') && (target.tagName === 'IMG'))) return;
 
-  let li = target.parentElement;
-  let ul = li.parentElement;
-  let textOfDeleteTask = li.innerHTML;
-  let mainItem = ul.parentElement;
-  let nameMainItem = '';
+  let 
+    li = target.parentElement,
+    ul = li.parentElement,
+    textOfTask = li.innerHTML;
 
-  switch(mainItem.firstElementChild.firstElementChild) {
-    case numberOfBacklogTasks:
-      numberOfBacklogTasks.innerHTML--;
-      nameMainItem = numberOfBacklogTasks;
-      li.innerHTML = '<div class="delete-task">Задача удалена</div><div class="cansel-delete-task">Отменить</div>';
-      break;
-    case numberOfInProgressTasks:
-      numberOfInProgressTasks.innerHTML--;
-      nameMainItem = numberOfInProgressTasks;
-      li.innerHTML = '<div class="delete-task">Задача выполнена</div><div class="cansel-delete-task">Отменить</div>';
-      break;
-    case numberOfDoneTasks:
-      numberOfDoneTasks.innerHTML--;
-      nameMainItem = numberOfDoneTasks;
-      li.innerHTML = '<div class="delete-task">Задача удалена</div><div class="cansel-delete-task">Отменить</div>';
-  }
+  li.innerHTML = `<div class="delete-task">Задача удалена</div><div class="cansel-delete-task">Отменить</div>`;
 
-  let timeDeleteTask = setTimeout(function() {
+  let
+    timerDeleteTask = setTimeout(() => {
       ul.removeChild(li);
-      if (nameMainItem == numberOfInProgressTasks) {
-        done.children[1].insertBefore(li, done.children[1].firstChild);
-        li.innerHTML = textOfDeleteTask;
-        numberOfDoneTasks.innerHTML++;
-        li.removeChild(li.children[2]);
-        li.children[2].insertAdjacentHTML('beforeBegin', '<img class="action-img delete" src="img/delete.png" alt="Удалить">')
-      }
-  }, 1500);
+      changeNumberOfTasks();
+  }, 1500),
+    buttonToCancelDeleteTask = document.querySelectorAll('.cansel-delete-task');
 
   function cancelDeleteTask() {
-    li.innerHTML = textOfDeleteTask;
-    clearTimeout(timeDeleteTask);
-    nameMainItem.innerHTML++;
-  }
+    li.innerHTML = textOfTask;
+    clearTimeout(timerDeleteTask);
+  };
 
-  let buttonCancelDeleteTask = document.querySelectorAll('.cansel-delete-task');
-  buttonCancelDeleteTask[buttonCancelDeleteTask.length - 1].addEventListener('click', cancelDeleteTask);
+  buttonToCancelDeleteTask[buttonToCancelDeleteTask.length - 1].addEventListener('click', cancelDeleteTask);
+};
 
-}
+containerOfAllSections.addEventListener('click', deleteTask);
 
+function performTask(event) {
+  let target = event.target;
+
+  if (!target.hasAttribute('class') || !(target.getAttribute('class').includes('done') && (target.tagName === 'IMG'))) return;
+
+  let 
+    li = target.parentElement,
+    ul = li.parentElement,
+    textOfTask = li.innerHTML;
+
+  li.innerHTML = `<div class="delete-task">Задача выполнена</div><div class="cansel-delete-task">Отменить</div>`;
+
+  let
+    timerDeleteTask = setTimeout(() => {
+      ul.removeChild(li);
+      listOfDoneTasks.insertBefore(li, listOfDoneTasks.firstChild);
+      li.innerHTML = textOfTask;
+      li.removeChild(li.children[2]);
+      li.children[2].insertAdjacentHTML(`beforeBegin`, `<img class="action-img delete" src="img/delete.png" alt="Удалить" title="Удалить">`);
+      changeNumberOfTasks();
+  }, 1500),
+    buttonToCancelDeleteTask = document.querySelectorAll('.cansel-delete-task');
+
+  function cancelDeleteTask() {
+    li.innerHTML = textOfTask;
+    clearTimeout(timerDeleteTask);
+  };
+
+  buttonToCancelDeleteTask[buttonToCancelDeleteTask.length - 1].addEventListener('click', cancelDeleteTask);
+};
+
+containerOfAllSections.addEventListener('click', performTask);
 
 function editTask(event) {
   let target = event.target;
 
-  if (!target.hasAttribute('class')) return;
-  let className = target.getAttribute('class');
-  if (className.indexOf('action-img') == -1) return;
-  if (className.indexOf('edit') == -1) return;
+  if (!target.hasAttribute('class') || !(target.getAttribute('class').includes('edit') && (target.tagName === 'IMG'))) return;
 
-  let li = target.parentElement;
-  let ul = li.parentElement;
-  let h3 = li.firstElementChild;
-  let p = li.children[1];
-  let textFromP = p.innerHTML;
-  let textFromH3 = h3.textContent;
-  let actionImgDelete = li.children[2];
-  let actionImgEdit = li.lastElementChild;
-  let textFromStartLi = li.innerHTML;
+  let
+    li = target.parentElement,
+    headerOfLi = li.firstElementChild,
+    contentOfLi = li.children[1],
+    initialImgOne = li.lastElementChild,
+    initialImgTwo = li.children[2],
+    textOfTask = li.innerHTML;
 
-  li.removeChild(actionImgDelete);
-  li.removeChild(actionImgEdit);
+  headerOfLi.innerHTML = `<input class="edit-input-field" type="text" value="${ headerOfLi.textContent }">`;
+  contentOfLi.innerHTML = `<textarea class="edit-textarea">${ contentOfLi.innerHTML }</textarea>`;
 
-  let imgCancelEdit = document.createElement('img');
-  imgCancelEdit.classList.add('edit-img');
-  imgCancelEdit.setAttribute('src', 'img/delete.png');
-  li.appendChild(imgCancelEdit);
+  li.removeChild(initialImgOne);
+  li.removeChild(initialImgTwo);
 
-  let imgSaveEdit = document.createElement('img');
-  imgSaveEdit.classList.add('edit-img');
-  imgSaveEdit.setAttribute('src', 'img/done.png');
-  li.appendChild(imgSaveEdit);
+  contentOfLi.insertAdjacentHTML(`afterEnd`, `<img class="change-img" src="img/delete.png"><img class="change-img" src="img/done.png"><select class="select-name-main-item"><option>Невыполнено</option><option>В процессе</option><option>Выполнено</option></select>`);
 
-  h3.innerHTML = `<input class="edit-input-field" type="text" value="${ textFromH3 }">`
+  let
+    selectSection = document.querySelector('.select-name-main-item'),
+    [imgToCancelEdit, imgToSaveEdit] = document.querySelectorAll('.change-img');
 
-  p.innerHTML = `<textarea class="edit-textarea">${ textFromP }</textarea>`
-
-  let select = document.createElement('select');
-  select.classList.add('select-name-main-item');
-
-  let mainItem = li.parentElement.parentElement;
-  let nameMainItem = '';
-
-  switch(mainItem.firstElementChild.firstElementChild) {
-    case numberOfBacklogTasks:
-      select.innerHTML = `<option selected>Невыполнено</option><option>В процессе</option><option>Выполнено</option>`;
-      nameMainItem = 'backlog';
-      break;
-    case numberOfInProgressTasks:
-      select.innerHTML = `<option>Невыполнено</option><option selected>В процессе</option><option>Выполнено</option>`;
-      nameMainItem = 'inProgress';
-      break;
-    case numberOfDoneTasks:
-      select.innerHTML = `<option>Невыполнено</option><option>В процессе</option><option selected>Выполнено</option>`;
-      nameMainItem = 'done';
-  }
-
-  li.appendChild(select);
-  let startIndex = select.selectedIndex;
+  selectSection.selectedIndex = li.parentElement.dataset.select;
 
   function saveEdit() {
-    let textFromInput = h3.firstElementChild.value;
-    let textFromTextarea = p.firstElementChild.value;
-    let index = select.selectedIndex;
-
-    if (index == startIndex) {
-      switch(nameMainItem) {
-        case 'backlog':
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img delete" src="img/delete.png" alt="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-          break;
-        case 'inProgress':
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img done" src="img/done.png" alt="Выполнено"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-          break;
-        case 'done':
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img delete" src="img/delete.png" alt="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-      }
+    if (li.parentElement.dataset.select == selectSection.selectedIndex) {
+      li.innerHTML = `<h3>${ headerOfLi.firstElementChild.value }</h3><p>${ contentOfLi.firstElementChild.value }</p>`;
+      li.appendChild(initialImgTwo);
+      li.appendChild(initialImgOne);
     } else {
-      ul.removeChild(li);
-      let newUl = '';
-      switch(index) {
+      li.parentElement.removeChild(li);
+
+      switch(selectSection.selectedIndex) {
         case 0:
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img delete" src="img/delete.png" alt="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-          newUl = backlog.children[1];
-          newUl.insertBefore(li, newUl.firstChild);
-          numberOfBacklogTasks.innerHTML++;
-          break;
+          li.innerHTML = `<h3>${ headerOfLi.firstElementChild.value }</h3><p>${ contentOfLi.firstElementChild.value }</p><img class="action-img delete" src="img/delete.png" alt="Удалить" title="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить" title="Изменить">`;
+          listOfBacklogTasks.insertBefore(li, listOfBacklogTasks.firstChild);
+        break;
         case 1:
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img done" src="img/done.png" alt="Выполнено"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-          newUl = inProgress.children[1];
-          newUl.insertBefore(li, newUl.firstChild);
-          numberOfInProgressTasks.innerHTML++;
-          break;
+          li.innerHTML = `<h3>${ headerOfLi.firstElementChild.value }</h3><p>${ contentOfLi.firstElementChild.value }</p><img class="action-img done" src="img/done.png" alt="Выполнено" title="Выполнено"><img class="action-img edit" src="img/edit.png" alt="Изменить" title="Изменить">`;
+          listOfInProgressTasks.insertBefore(li, listOfInProgressTasks.firstChild);
+        break;
         case 2:
-          li.innerHTML = `<h3>${ textFromInput }</h3><p>${ textFromTextarea }</p><img class="action-img delete" src="img/delete.png" alt="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить">`;
-          newUl = done.children[1];
-          newUl.insertBefore(li, newUl.firstChild);
-          numberOfDoneTasks.innerHTML++;
-      }
-      switch(startIndex) {
-        case 0:
-          numberOfBacklogTasks.innerHTML--;
-          break;
-        case 1:
-          numberOfInProgressTasks.innerHTML--;
-          break;
-        case 2:
-          numberOfDoneTasks.innerHTML--;
-      }
-    }
-  }
+          li.innerHTML = `<h3>${ headerOfLi.firstElementChild.value }</h3><p>${ contentOfLi.firstElementChild.value }</p><img class="action-img delete" src="img/delete.png" alt="Удалить" title="Удалить"><img class="action-img edit" src="img/edit.png" alt="Изменить" title="Изменить">`;
+          listOfDoneTasks.insertBefore(li, listOfDoneTasks.firstChild);
+      };
+      changeNumberOfTasks();
+    };
+  };
 
   function cancelEdit() {
-    li.innerHTML = textFromStartLi;
-  }
+    li.innerHTML = textOfTask;
+  };
 
-  imgSaveEdit.addEventListener('click', saveEdit);
-  imgCancelEdit.addEventListener('click', cancelEdit);
-}
+  imgToSaveEdit.addEventListener('click', saveEdit);
+  imgToCancelEdit.addEventListener('click', cancelEdit);
+};
 
-main.addEventListener('click', deleteTask);
-main.addEventListener('click', editTask);
+containerOfAllSections.addEventListener('click', editTask);
 
-
-
-/*
-  * при нажатии enter в поле ввода новой заметки она должна вызывать срабатывание кнопки "добавить"
-  * сделать анимацию изображения "информация" при нажатии на него
-*/
+function changeNumberOfTasks() {
+  numberOfBacklogTasks.textContent = listOfBacklogTasks.children.length;
+  numberOfInProgressTasks.textContent = listOfInProgressTasks.children.length;
+  numberOfDoneTasks.textContent = listOfDoneTasks.children.length;
+};

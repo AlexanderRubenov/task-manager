@@ -131,7 +131,7 @@ h3 {
 }
 
 .action-img, 
-.edit-img {
+.change-img {
   width: 15%;
   height: auto;
   background: linear-gradient(180deg, #8b8e95, #000601);
@@ -160,8 +160,6 @@ h3 {
   text-decoration: none;
   color: #000000;
 }
-
-/*Далее стили для элементов, вызванных через JavaScript*/
 
 .delete-task {
   text-align: center;

@@ -103,7 +103,7 @@
   }
 
   .action-img,
-  .edit-img {
+  .change-img {
     width: 20%;
     margin-left: 1.5vw;
   }
@@ -121,8 +121,6 @@
     font-size: 2vw;
     margin-bottom: 2%;
   }
-
-  /*Далее стили для элементов, вызванных через JavaScript*/
 
   .delete-task {
     font-size: 5.5vw;
