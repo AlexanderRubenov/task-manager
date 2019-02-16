@@ -1,12 +1,16 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
   font-family: Tahoma, sans-serif;
   padding: 0 8%;
+  background: -webkit-gradient(linear, left top, left bottom, from(#d3d4d6), to(#ebebeb)) no-repeat;
+  background: -webkit-linear-gradient(top, #d3d4d6, #ebebeb) no-repeat;
+  background: -o-linear-gradient(top, #d3d4d6, #ebebeb) no-repeat;
   background: linear-gradient(180deg, #d3d4d6, #ebebeb) no-repeat;
 }
 
@@ -41,6 +45,8 @@ h1 {
 }
 
 .form-text {
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   font-size: 1.05vw;
   display: block;
@@ -71,6 +77,9 @@ h1 {
   width: 11%;
   font-size: 0.9vw;
   height: 2.3vw;
+  background: -webkit-gradient(linear, left top, left bottom, from(#7e7e7e), to(#3e3e3e));
+  background: -webkit-linear-gradient(top, #7e7e7e, #3e3e3e);
+  background: -o-linear-gradient(top, #7e7e7e, #3e3e3e);
   background: linear-gradient(180deg, #7e7e7e, #3e3e3e);
   color: #ffffff;
   border: none;
@@ -79,8 +88,12 @@ h1 {
 }
 
 .main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin-bottom: 2%;
 }
 
@@ -115,7 +128,8 @@ li {
   margin-bottom: 11%;
   padding: 5%;
   background-color: #ffff91;
-  box-shadow: 0.3vw 0.3vw 0.6vw #cccccc;
+  -webkit-box-shadow: 0.3vw 0.3vw 0.6vw #cccccc;
+          box-shadow: 0.3vw 0.3vw 0.6vw #cccccc;
 }
 
 h3 {
@@ -134,6 +148,9 @@ h3 {
 .change-img {
   width: 15%;
   height: auto;
+  background: -webkit-gradient(linear, left top, left bottom, from(#8b8e95), to(#000601));
+  background: -webkit-linear-gradient(top, #8b8e95, #000601);
+  background: -o-linear-gradient(top, #8b8e95, #000601);
   background: linear-gradient(180deg, #8b8e95, #000601);
   border-radius: 50%;
   float: right;
@@ -174,6 +191,8 @@ h3 {
   margin-top: 35%;
   font-size: 1.1vw;
   cursor: pointer;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
 }
 

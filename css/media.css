@@ -1,4 +1,4 @@
-@media (max-width: 480px) {
+@media (max-width: 480px) {a
 
   body {
     padding: 0 4%;
@@ -14,7 +14,7 @@
 
   h1 {
     margin-top: 12%;
-    font-size: 5.9vw;
+    font-size: 5.2vw;
     float: left;
   }
 
@@ -57,8 +57,12 @@
   }
 
   .main {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     margin-bottom: 5%;
     overflow-x: auto;
   }
